@@ -37,10 +37,25 @@ const App: Component = () => {
         <Show
           when={imageUrl()}
           fallback={
-            <input type="file" accept="image/*" onChange={handleUpload} />
+            <input
+              class={styles.fileInput}
+              type="file"
+              accept="image/*"
+              onChange={handleUpload}
+            />
           }
         >
-          <button onClick={(e) => setImageUrl(null)}>Clear image</button>
+          <button
+            onClick={(e) => {
+              setImageUrl(null);
+              setContrast(100);
+              setBrightness(100);
+              setHue(0);
+              setSaturate(100);
+            }}
+          >
+            Clear image
+          </button>
           <img
             class={styles.image}
             style={{
