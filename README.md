@@ -8,4 +8,4 @@
 
 🌐 [image-filter-app.netlify.app](https://image-filter-app.netlify.app)
 
-This is a simple little web app for testing out some image filters. It is built with [Solid JS](https://solidJS.com) and [open-props](https://open-props.style).
+This is a simple little web app for testing out some image filters. It is built with [Solid JS](https://solidJS.com) and [open-props](https://open-props.style). It is deployed on [Netlify](https://www.netlify.com).
