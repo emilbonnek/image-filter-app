@@ -19,6 +19,10 @@
     var(--animation-slide-in-left);
 }
 
+.fileInput {
+  margin: auto;
+}
+
 .imageContainer {
   max-width: var(--size-content-2);
   margin: auto;
