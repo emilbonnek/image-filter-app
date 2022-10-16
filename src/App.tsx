@@ -5,6 +5,11 @@ import styles from "./App.module.css"; // Import css modules stylesheet as style
 const App: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
 
+  const [contrast, setContrast] = createSignal(100);
+  const [brightness, setBrightness] = createSignal(100);
+  const [hue, setHue] = createSignal(0);
+  const [saturate, setSaturate] = createSignal(100);
+
   function handleUpload(event: Event) {
     // Get filelist from event
     const fileList = (event.target as HTMLInputElement).files;
@@ -21,23 +26,76 @@ const App: Component = () => {
     }
 
     // Create data url from image file
-    toast.success("Toast launched successfully!");
+    toast.success("Image loaded successfully!");
     setImageUrl(URL.createObjectURL(file as Blob));
   }
 
   return (
     <div class={styles.App}>
       <Toaster />
-      <Show
-        when={imageUrl()}
-        fallback={
-          <input type="file" accept="image/*" onChange={handleUpload} />
-        }
-      >
-        <div class={styles.imageContainer}>
-          <img class={styles.image} src={imageUrl() as string}></img>
-        </div>
-      </Show>
+      <div class={styles.Card}>
+        <Show
+          when={imageUrl()}
+          fallback={
+            <input type="file" accept="image/*" onChange={handleUpload} />
+          }
+        >
+          <button onClick={(e) => setImageUrl(null)}>Clear image</button>
+          <img
+            class={styles.image}
+            style={{
+              filter: `contrast(${contrast()}%) brightness(${brightness()}%) hue-rotate(${hue()}deg) saturate(${saturate()}%)`,
+            }}
+            src={imageUrl() as string}
+          ></img>
+          <div class={styles.sliderGroup}>
+            <label>
+              Contrast
+              <input
+                class={styles.slider}
+                onInput={(e) => setContrast(e.currentTarget.valueAsNumber)}
+                type="range"
+                min="0"
+                max="200"
+                value={contrast()}
+              />
+            </label>
+            <label>
+              Brightness
+              <input
+                class={styles.slider}
+                onInput={(e) => setBrightness(e.currentTarget.valueAsNumber)}
+                type="range"
+                min="0"
+                max="200"
+                value={brightness()}
+              />
+            </label>
+            <label>
+              Hue
+              <input
+                class={styles.slider}
+                onInput={(e) => setHue(e.currentTarget.valueAsNumber)}
+                type="range"
+                min="-180"
+                max="180"
+                value={hue()}
+              />
+            </label>
+            <label>
+              Saturate
+              <input
+                class={styles.slider}
+                onInput={(e) => setSaturate(e.currentTarget.valueAsNumber)}
+                type="range"
+                min="0"
+                max="200"
+                value={saturate()}
+              />
+            </label>
+          </div>
+        </Show>
+      </div>
     </div>
   );
 };
