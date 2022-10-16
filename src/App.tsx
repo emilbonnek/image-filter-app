@@ -1,14 +1,28 @@
 import { Component, createSignal, Show } from "solid-js";
 import toast, { Toaster } from "solid-toast";
 import styles from "./App.module.css"; // Import css modules stylesheet as styles
+import {
+  DEFAULT_BRIGHTNESS,
+  DEFAULT_CONTRAST,
+  DEFAULT_HUE,
+  DEFAULT_SATURATION,
+  MAX_BRIGHTNESS,
+  MAX_CONTRAST,
+  MAX_HUE,
+  MAX_SATURATION,
+  MIN_BRIGHTNESS,
+  MIN_CONTRAST,
+  MIN_HUE,
+  MIN_SATURATION,
+} from "./config";
 
 const App: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
 
-  const [contrast, setContrast] = createSignal(100);
-  const [brightness, setBrightness] = createSignal(100);
-  const [hue, setHue] = createSignal(0);
-  const [saturate, setSaturate] = createSignal(100);
+  const [contrast, setContrast] = createSignal(DEFAULT_CONTRAST);
+  const [brightness, setBrightness] = createSignal(DEFAULT_BRIGHTNESS);
+  const [hue, setHue] = createSignal(DEFAULT_HUE);
+  const [saturate, setSaturate] = createSignal(DEFAULT_SATURATION);
 
   function handleUpload(event: Event) {
     // Get filelist from event
@@ -18,7 +32,7 @@ const App: Component = () => {
       return;
     }
 
-    // Get first
+    // Get first (only) file from filelist
     const file = fileList.item(0) as File;
     if (file.type.indexOf("image") === -1) {
       toast.error("Oops! Something went wrong.");
@@ -48,10 +62,10 @@ const App: Component = () => {
           <button
             onClick={(e) => {
               setImageUrl(null);
-              setContrast(100);
-              setBrightness(100);
-              setHue(0);
-              setSaturate(100);
+              setContrast(DEFAULT_CONTRAST);
+              setBrightness(DEFAULT_BRIGHTNESS);
+              setHue(DEFAULT_HUE);
+              setSaturate(DEFAULT_HUE);
             }}
           >
             Clear image
@@ -70,8 +84,8 @@ const App: Component = () => {
                 class={styles.slider}
                 onInput={(e) => setContrast(e.currentTarget.valueAsNumber)}
                 type="range"
-                min="0"
-                max="200"
+                min={MIN_CONTRAST}
+                max={MAX_CONTRAST}
                 value={contrast()}
               />
             </label>
@@ -81,8 +95,8 @@ const App: Component = () => {
                 class={styles.slider}
                 onInput={(e) => setBrightness(e.currentTarget.valueAsNumber)}
                 type="range"
-                min="0"
-                max="200"
+                min={MIN_BRIGHTNESS}
+                max={MAX_BRIGHTNESS}
                 value={brightness()}
               />
             </label>
@@ -92,8 +106,8 @@ const App: Component = () => {
                 class={styles.slider}
                 onInput={(e) => setHue(e.currentTarget.valueAsNumber)}
                 type="range"
-                min="-180"
-                max="180"
+                min={MIN_HUE}
+                max={MAX_HUE}
                 value={hue()}
               />
             </label>
@@ -103,8 +117,8 @@ const App: Component = () => {
                 class={styles.slider}
                 onInput={(e) => setSaturate(e.currentTarget.valueAsNumber)}
                 type="range"
-                min="0"
-                max="200"
+                min={MIN_SATURATION}
+                max={MAX_SATURATION}
                 value={saturate()}
               />
             </label>
