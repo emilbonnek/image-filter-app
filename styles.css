@@ -1,18 +1,3 @@
-/* the props */
-@import "open-props/style";
-
-/* optional imports that use the props */
-@import "open-props/normalize";
-@import "open-props/buttons";
-
-/* individual imports */
-@import "open-props/indigo";
-@import "open-props/easings";
-@import "open-props/animations";
-@import "open-props/sizes";
-@import "open-props/gradients";
-/* see PropPacks for the full list */
-
 html {
   width: 100vw;
   height: 100vh;
