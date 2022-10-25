@@ -15,6 +15,7 @@ import {
   MIN_HUE,
   MIN_SATURATION,
 } from "./config";
+import { getImageDataURL } from "./utils/getImageDataURL";
 
 const App: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
@@ -23,6 +24,8 @@ const App: Component = () => {
   const [brightness, setBrightness] = createSignal(DEFAULT_BRIGHTNESS);
   const [hue, setHue] = createSignal(DEFAULT_HUE);
   const [saturate, setSaturate] = createSignal(DEFAULT_SATURATION);
+
+  const [downloading, setDownloading] = createSignal(false);
 
   function handleUpload(event: Event) {
     // Get filelist from event
@@ -123,6 +126,28 @@ const App: Component = () => {
               />
             </label>
           </div>
+          <button
+            onClick={async (e) => {
+              setDownloading(true);
+              const imageDataUrl = await getImageDataURL(
+                imageUrl() as string,
+                contrast(),
+                brightness(),
+                hue(),
+                saturate()
+              );
+              // Download image
+              const link = document.createElement("a");
+              link.download = "download_image.png";
+              link.href = imageDataUrl;
+              link.click();
+              link.remove();
+              setDownloading(false);
+            }}
+            disabled={downloading()}
+          >
+            Download
+          </button>
         </Show>
       </div>
     </div>
